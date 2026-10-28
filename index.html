@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Find Your Starting Position – Typing Lesson | Typing Games Free</title>
+<meta name="description" content="Free touch typing lesson: find your starting position on the home row. From Typing Games Free.">
+<style>
+:root{
+  --bg:#1e1b4b; --panel:#272463; --line:#403d94; --txt:#f1efff; --dim:#b9b5ee;
+  --amber:#ffb300; --ok:#7be08f; --bad:#ff6b6b; --orange:#ffa31a; --green:#1f9d3a; --ink:#1a1840;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:"Trebuchet MS","Segoe UI",system-ui,sans-serif;min-height:100vh}
+main{max-width:880px;margin:0 auto;padding:1.5rem 1rem 3rem}
+
+/* ---- Brand header (reusable on every game) ---- */
+.brand{display:flex;flex-direction:column;align-items:center;gap:.7rem;margin:0 auto 1.8rem;text-decoration:none;width:max-content;max-width:100%}
+.pill{display:flex;align-items:center;gap:.8rem;background:#fff;border-radius:16px;padding:.6rem 1.1rem .6rem .7rem}
+.pill svg{width:54px;height:54px;flex:none}
+.words{display:flex;flex-direction:column;line-height:1}
+.words b{font-family:Verdana,"Trebuchet MS",sans-serif;font-weight:900;font-size:clamp(1.15rem,4vw,1.65rem);color:var(--ink);letter-spacing:.01em}
+.words .row{display:flex;align-items:center;gap:.5rem;margin-top:.3rem}
+.words em{font-style:normal;font-family:Verdana,sans-serif;font-weight:900;font-size:clamp(1.15rem,4vw,1.65rem);color:var(--green)}
+.flag{flex:1;min-width:60px;height:18px;border:2px solid #111;background:conic-gradient(#111 25%,#fff 0 50%,#111 0 75%,#fff 0) 0 0/18px 18px}
+.url{color:var(--orange);font-weight:800;font-size:1.15rem}
+.brand:hover .url{text-decoration:underline}
+.brand:focus-visible{outline:3px solid var(--amber);outline-offset:6px;border-radius:16px}
+
+.intro{text-align:center;padding-top:2rem}
+.intro .lead{font-size:clamp(1.4rem,4vw,2rem);margin:.5rem 0 .4rem}
+.intro .lead2{color:var(--dim);max-width:30rem;margin:0 auto 1.4rem;line-height:1.5}
+#playBtn{font-size:1.2rem;padding:.8rem 2.4rem}
+
+/* ---- Lesson ---- */
+.tag{color:var(--dim);font-size:.9rem;margin:0}
+h1{font-size:clamp(1.5rem,4vw,2.1rem);margin:.2rem 0 .4rem}
+.hint{margin:0 0 1rem;color:var(--dim);min-height:1.5em}
+.hint strong{color:var(--amber)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.2rem}
+.lines{font-family:ui-monospace,Consolas,"Courier New",monospace;font-size:clamp(1.2rem,3.4vw,1.8rem);line-height:1.8}
+.ln{white-space:pre}
+.lines span{padding:.05em 0;border-radius:4px}
+.lines .d{color:var(--ok)}
+.lines .c{background:var(--amber);color:var(--ink)}
+.lines.bad .c{background:var(--bad)}
+.lines .nl{opacity:.55}
+.bars{display:flex;gap:1.2rem;flex-wrap:wrap;align-items:center;margin-top:.8rem;color:var(--dim);font-size:.95rem}
+.prog{flex:1;min-width:140px;height:8px;background:#ffffff1c;border-radius:4px;overflow:hidden}
+.prog i{display:block;height:100%;width:0;background:var(--amber);transition:width .15s}
+
+/* ---- Keyboard ---- */
+.kb{margin-top:1rem;display:flex;flex-direction:column;gap:5px;user-select:none}
+.kr{display:flex;gap:5px}
+.k{flex:1 1 0;min-width:0;height:clamp(32px,6vw,48px);display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:#1a1844;border:1px solid var(--line);border-radius:7px;font-size:clamp(.6rem,1.7vw,.85rem);line-height:1.1;position:relative;color:var(--dim)}
+.k small{font-size:.8em;opacity:.7}
+.k.home{background:#2f2c7a;color:var(--txt)}
+.k.bump::after{content:"";position:absolute;bottom:5px;width:40%;height:2px;background:var(--dim);border-radius:2px}
+.k.target{background:var(--amber);color:var(--ink);border-color:var(--amber);box-shadow:0 0 0 3px #ffb30055}
+.k.hit{background:var(--ok);color:var(--ink)}
+.k.miss{background:var(--bad);color:var(--ink)}
+
+/* ---- Result ---- */
+.result{text-align:center;padding:1rem 0}
+.result h2{margin:0 0 .4rem}
+.result dl{display:flex;justify-content:center;gap:2rem;margin:1rem 0;flex-wrap:wrap}
+.result dt{color:var(--dim);font-size:.85rem}.result dd{margin:0;font-size:1.6rem;font-weight:800}
+button{font:inherit;font-weight:700;border:0;border-radius:10px;padding:.7rem 1.3rem;cursor:pointer;background:var(--amber);color:var(--ink);margin:0 .3rem}
+button.alt{background:transparent;color:var(--txt);border:1px solid var(--line)}
+button:focus-visible{outline:3px solid #fff;outline-offset:2px}
+[hidden]{display:none!important}
+.note{margin-top:1rem;font-size:.8rem;color:var(--dim);text-align:center}
+@media (prefers-reduced-motion:reduce){.prog i{transition:none}}
+</style>
+</head>
+<body>
+<main>
+  <section id="intro" class="intro">
+  <!-- Brand header: only shown on the start screen, hidden once the player presses Play -->
+  <a class="brand" href="https://typinggamesfree.io" target="_blank" rel="noopener" aria-label="Typing Games Free – typinggamesfree.io">
+    <span class="pill">
+      <svg viewBox="0 0 48 48" aria-hidden="true">
+        <rect x="2" y="2" width="44" height="44" rx="6" fill="#f5b82e" stroke="#1a1840" stroke-width="3"/>
+        <rect x="9" y="9" width="30" height="30" rx="3" fill="#1a1840"/>
+        <rect x="14" y="14" width="20" height="5" fill="#f5b82e"/>
+        <rect x="21.5" y="19" width="5" height="15" fill="#f5b82e"/>
+      </svg>
+      <span class="words"><b>TYPING GAMES</b><span class="row"><em>FREE</em><i class="flag"></i></span></span>
+    </span>
+    <span class="url">typinggamesfree.io</span>
+  </a>
+    <h2 class="lead">Touch typing lesson</h2>
+    <p class="lead2">Learn where your fingers belong on the keyboard. Press Play or Enter to begin.</p>
+    <button id="playBtn">Play</button>
+  </section>
+
+  <!-- Game content: changes per game -->
+  <div id="game" hidden>
+  <p class="tag" id="tag"></p>
+  <h1 id="title"></h1>
+  <p class="hint" id="hint"></p>
+
+  <section class="card">
+    <div id="play">
+      <div class="lines" id="lines" aria-live="polite"></div>
+      <div class="bars">
+        <span id="sAcc">100% accuracy</span><span id="sWpm">0 WPM</span>
+        <span class="prog"><i id="fill"></i></span>
+      </div>
+    </div>
+    <div class="result" id="result" hidden>
+      <h2>Lesson complete!</h2>
+      <dl id="rStats"></dl>
+      <button id="again" class="alt">Try again</button><button id="next">Next lesson</button>
+    </div>
+  </section>
+
+  <div class="kb" id="kb" aria-hidden="true"></div>
+  <p class="note">Use a physical keyboard. Press the highlighted key; a wrong key will not move you forward.</p>
+  </div>
+</main>
+
+<script>
+const LESSONS = [
+  {title:"Find Your Starting Position", hint:"Rest your fingers on A S D F J K L ;, then type the first F to begin.",
+   lines:["ffff jjjj","jjjj ffff","fj fj fj fj","fj jf jf jf"]},
+  {title:"Your Left Hand", hint:"Your left fingers cover A S D F. Press each key with the finger resting on it.",
+   lines:["asdf asdf","fdsa fdsa","sad fad dad","add ads fads"]},
+  {title:"Your Right Hand", hint:"Your right fingers cover J K L ;. Keep your thumbs near the spacebar.",
+   lines:["jkl; jkl;",";lkj ;lkj","jj kk ll ;;","lk jk kl j;"]}
+];
+const FINGER = {a:"left pinky",s:"left ring finger",d:"left middle finger",f:"left index finger",
+  j:"right index finger",k:"right middle finger",l:"right ring finger",";":"right pinky"," ":"either thumb","\n":"right pinky"};
+const ROWS = [
+  ["`~","1!","2@","3#","4$","5%","6^","7&","8*","9(","0)","-_","=+",["Backspace",2]],
+  [["Tab",1.5],"q","w","e","r","t","y","u","i","o","p","[{","]}",["\\|",1.5]],
+  [["Caps",1.8],"a","s","d","f","g","h","j","k","l",";:","'\"",["Enter",2.2]],
+  [["Shift",2.3],"z","x","c","v","b","n","m",",<",".>","/?",["Shift",2.7]],
+  [["",2.5],["Space",7],["",2.5]]
+];
+const HOME = "asdfjkl;", $ = id => document.getElementById(id);
+const keyEls = {}; let L = 0, text, spans, pos, errors, correct, t0, done;
+
+function buildKeyboard(){
+  const kb = $("kb");
+  ROWS.forEach(r => {
+    const row = document.createElement("div"); row.className = "kr";
+    r.forEach(k => {
+      const [lab, w] = Array.isArray(k) ? k : [k, 1];
+      const el = document.createElement("div"); el.className = "k"; el.style.flexGrow = w;
+      let id;
+      if (lab.length === 2 && !/^[A-Za-z]/.test(lab) && lab !== "Tab") {
+        id = lab[0]; el.innerHTML = "<small></small><span></span>";
+        el.firstChild.textContent = lab[1]; el.lastChild.textContent = lab[0];
+      } else if (lab.length === 1) { id = lab; el.textContent = lab.toUpperCase(); }
+      else { id = lab === "Space" ? " " : lab === "Enter" ? "\n" : null; el.textContent = lab; }
+      if (HOME.includes(id)) el.classList.add("home");
+      if (id === "f" || id === "j") el.classList.add("bump");
+      if (id !== null && id !== "" && !keyEls[id]) keyEls[id] = el;
+      row.appendChild(el);
+    });
+    kb.appendChild(row);
+  });
+}
+
+function load(i){
+  L = i; const les = LESSONS[L];
+  text = les.lines.join("\n"); pos = 0; errors = 0; correct = 0; t0 = 0; done = false;
+  $("tag").textContent = "Foundations · " + (L+1) + " of " + LESSONS.length;
+  $("title").textContent = les.title; $("hint").textContent = les.hint;
+  $("play").hidden = false; $("result").hidden = true;
+  const box = $("lines"); box.innerHTML = ""; spans = [];
+  les.lines.forEach((ln, li) => {
+    const d = document.createElement("div"); d.className = "ln";
+    for (const ch of ln) { const s = document.createElement("span"); s.textContent = ch; spans.push(s); d.appendChild(s); }
+    if (li < les.lines.length - 1) { const s = document.createElement("span"); s.className = "nl"; s.textContent = "⏎"; spans.push(s); d.appendChild(s); }
+    box.appendChild(d);
+  });
+  paint();
+}
+
+function paint(){
+  spans.forEach((s, i) => { s.classList.toggle("d", i < pos); s.classList.toggle("c", i === pos); });
+  Object.values(keyEls).forEach(k => k.classList.remove("target"));
+  if (pos < text.length) {
+    const k = keyEls[text[pos]]; if (k) k.classList.add("target");
+    if (t0) $("hint").innerHTML = "Next: <strong>" + (text[pos] === "\n" ? "Enter" : text[pos] === " " ? "Space" : text[pos].toUpperCase()) + "</strong> with your " + FINGER[text[pos]] + ".";
+  }
+  $("fill").style.width = (pos / text.length * 100) + "%";
+  const tot = correct + errors, mins = t0 ? Math.max((performance.now() - t0) / 60000, 1/600) : 0;
+  $("sAcc").textContent = (tot ? Math.round(correct / tot * 100) : 100) + "% accuracy";
+  $("sWpm").textContent = Math.round(mins ? correct / 5 / mins : 0) + " WPM";
+}
+
+function flash(ch, cls){
+  const k = keyEls[ch.length === 1 ? ch.toLowerCase() : ch]; if (!k) return;
+  k.classList.add(cls); setTimeout(() => k.classList.remove(cls), 160);
+}
+
+function finish(){
+  done = true; paint();
+  const mins = Math.max((performance.now() - t0) / 60000, 1/600), tot = correct + errors;
+  const rows = [["Accuracy", Math.round(correct / tot * 100) + "%"], ["Speed", Math.round(correct / 5 / mins) + " WPM"], ["Mistakes", errors]];
+  const dl = $("rStats"); dl.innerHTML = "";
+  rows.forEach(([k, v]) => { const g = document.createElement("div"), a = document.createElement("dt"), b = document.createElement("dd"); a.textContent = k; b.textContent = v; g.append(a, b); dl.appendChild(g); });
+  $("next").textContent = L < LESSONS.length - 1 ? "Next lesson" : "Back to lesson 1";
+  $("play").hidden = true; $("result").hidden = false; $("next").focus();
+}
+
+let playing = false;
+function startGame(){
+  if (playing) return;
+  playing = true;
+  $("intro").hidden = true; $("game").hidden = false;
+  document.activeElement.blur();
+}
+$("playBtn").onclick = startGame;
+
+document.addEventListener("keydown", e => {
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+  if (!playing) { if (e.key === "Enter") { e.preventDefault(); startGame(); } return; }
+  if (done) return;
+  const ch = e.key === "Enter" ? "\n" : e.key;
+  if (ch.length !== 1) return;
+  if (e.target.tagName === "BUTTON" && ch === "\n") return;
+  e.preventDefault();
+  if (!t0) t0 = performance.now();
+  if (ch === text[pos]) { correct++; pos++; $("lines").classList.remove("bad"); flash(ch, "hit"); }
+  else { errors++; $("lines").classList.add("bad"); flash(ch, "miss"); }
+  if (pos === text.length) finish(); else paint();
+});
+
+$("again").onclick = () => load(L);
+$("next").onclick = () => load(L < LESSONS.length - 1 ? L + 1 : 0);
+buildKeyboard(); load(0);
+</script>
+</body>
+</html>
